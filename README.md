@@ -26,8 +26,9 @@
 
 * **필요 AWS 서비스**
 
-		- Amazon S3
-​		- Amazon CloudFront (AWS Edge Location은 전세계 160군데에 있음)
+  	- Amazon S3
+
+  ​		- Amazon CloudFront (AWS Edge Location은 전세계 160군데에 있음)
 
 
 
@@ -453,4 +454,6 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 ​		Object storage : 하나의 파일과 그 파일을 설명하는 메타데이터까지 오브젝트라고 함
 ​		(S3는 오브젝트를 버킷이라고 하는 저장공간에 저장함, 디렉토리의 개념임(PC), 버킷의 권한
 ​		조정을 통해 오브젝트를 업로드하고, 삭제하는것을 조정함
->>>>>>> 0f2f60dd196ee169c871e662fc41db49ba979bec
+
+
+
