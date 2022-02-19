@@ -229,6 +229,15 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
    1.2 LAMP 서버 테스트
 
 2. Custom AMI 생성
+   2.1 Create Image 
+
+   ```
+   Image name : 이미지 네임 설정
+   Image description : 이미지 네임 설정 동일
+   No reboot : 체크 (서비스 중인 EC2를 리붓하게 되면 서비스 장애가 발생할 수도 있어서 체크하는게 좋음)
+   ```
+
+   
 
 3. Custom AMI로 두 번째 LAMP 서버 생성
 
@@ -239,6 +248,67 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 2. Application Load Balancer 시작하기
 
    2.1 Load Balancer 유형 선택
+   	   Load Balancing / Load Balancers / Create Load Balancer
+          Application Load Balancer / Network Load Balancer / Classic Load Balancer
+
+    	  Step1 Configure Load Balancer
+
+   ```
+   Name : 설정
+   Scheme : Internet-facing (public) 
+   Ip address type : ipv4 
+   
+   Listeners  (필요한 프로토콜과 포트를 추가하면됨)
+   -Load Balancer Protocol : HTTP
+   -Load Balancer Port : 80
+   
+   
+   Availability Zones
+   VPC : 디폴트설정
+   Availability Zones : app1, app2 와 같이 설정하고 , subnet-default 설정
+   
+   
+   Tags
+   key  : Name
+   value : lab-web-alb
+   ```
+
+     	 Step 2, 3 보안그룹설정 필수
+
+   ​		Step 4 라우팅 컨피그 
+
+   ```
+   Target Group 설정
+   Name : 설정
+   Target : Instance 
+   Protocol : HTTP 
+   Port 80
+   
+   Health Check
+   Protocol : HTTP 
+   Path : / 
+   
+   Advanced health check Settings  (디폴트)
+   Port : traffic port
+   Healthy threshold : 5
+   Unhealthy threshold : 2 
+   Timeout : 5
+   Interval : 30
+   Success codes : 200
+   
+   
+   ```
+
+   ​      Step 5 Register Target 
+
+   ​	  Step 6 Review 
+
+   ```
+   alb의 DNS name이 중요하다. 
+   위와 같이 설정하면 alb(application load balancer)의 DNS name으로 접속시 로드밸런싱 설정되 있는 서버 2개 중 1대로 접속된다.
+   ```
+
+   
 
    2.2 Load Balancer 및 리스너 구성
 
