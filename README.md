@@ -20,7 +20,7 @@
 
 
 
-![CloudFront](D:\프로젝트\OKR\OKR\공부정리\2021\학습문서\AWS\CloudFront.png)
+![CloudFront](CloudFront.png)
 
 
 
