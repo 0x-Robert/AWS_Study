@@ -48,7 +48,7 @@
 
 
 
-## 아키텍쳐 구현 순서
+### 1.2 아키텍쳐 구현 순서
 
 1. S3 정적 웹 호스팅 구성하기
   1.1  S3 Bucket 생성(디폴트 옵션대로 설치,서버없이 웹 호스팅)
@@ -224,7 +224,7 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 
 
-## 아키텍쳐 구현 순서
+### 2.2 아키텍쳐 구현 순서
 
 
 
@@ -350,7 +350,7 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 
 
-### 아키텍처에 구현할 기술
+### 3.1 아키텍처에 구현할 기술
 
 가상의 네트워크에서 인터넷과 연결 또는 연결되지 않은 하위 네트워크를 만들고 다른 가상 서버와 연결하기 위한 중계 서버를 구성합니다. 
 
@@ -388,7 +388,7 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 
 
-## 아키텍쳐 구현 순서
+### 3.2 아키텍쳐 구현 순서
 
 
 
@@ -611,14 +611,340 @@ status : active
 propagated : No
 ```
 
-
-
 ```
 Destination : 0.0.0.0/0
 Target : nat-위에서 설정한 nat-2c
 status : active
 propagated : No
 ```
+
+
+
+
+
+
+
+
+
+****
+
+
+
+## 4. RDS for MYSQL 생성하기
+
+
+
+사전 셋팅 
+
+```
+■ 실습 진행 중 참고 사항
+
+[Amazon RDS를 통한 MySQL Database 및 Security Group 생성]
+
+· 실습 영상 중 Database 생성에서 Template은 'Dev/Test'를 선택하였지만 'Free tier'를 선택하셔도 괜찮습니다. 이 경우 DB instance size는 실습 영상에서 설정하는 Burstable class / db.t2.mircro로 자동 선택되며 다른 class 및 instance type으로 변경할 수 없습니다.
+
+· Create Database 클릭 후 Database 생성까지는 약 10분~15분 정도의 긴 시간이 소요되며, 원활한 실습 영상을 위하여 대기시간은 편집하였습니다.
+
+[SSH 및 Web으로 Database 관리를 위한 RDS for MySQL 접속]
+
+· 실습 영상 중 사용되는 주요 명령어는 다음과 같습니다.
+
+  - PuTTY에서 RDS for MySQL 접속 : mysql -u<user> -p -h <rds endpoint>
+
+  - 데이터베이스 보기 : show databases;
+
+  - 데이터베이스 사용 : use <database name>;
+
+  - 테이블 보기 : show tables;
+
+  - 테이블 검색 : select * from <table name>;
+
+  - 접속 해제 : exit
+
+  - phpMyAdmin 환경 설정을 위한 Config 파일에 RDS 정보 입력
+
+    : 파일 위치 이동 : cd/var/www/html/phpMyAdmin
+
+    : 편집기로 Config 파일 열기 : sudo vi config.inc.php
+```
+
+
+
+
+
+![4_rds_For_MySQL](4_rds_For_MySQL.png)
+
+
+
+### 4.1 아키텍쳐에 구현할 기술
+
+완전 관리형 MySQL 데이터 베이스를 구성하고 리눅스 기반의 가상서버에 MYSQL 클라이언트로 연결합니다.
+
+
+
+* 필요 AWS 서비스
+
+  Amazon Relational Database Service(RDS)
+
+* 기타 필요 사항
+
+  간단한 Query문 및 PHP 문법
+
+
+
+
+
+
+
+### 4.2 아키텍처 구현 순서
+
+1.RDS for MySQL 구성하기
+
+1.1 Database creation method 선택
+
+1.2 Database Engine 선택
+
+1.3 DB 식별, Master Username/PW 셋팅
+
+1.4 DB Instance size 선택
+
+1.5 네트워크 설정
+
+```
+Connectivity 
+Virtual private cloud : 해당 vpc 선택 (lab-vpc)
+Subnet group : default-vpc 선택
+
+```
+
+
+
+
+
+
+
+
+
+
+
+****
+
+
+
+
+
+
+
+## 5. Auto Scaling으로 확장성 및 탄력성 구현하기
+
+
+
+
+
+
+
+![5_Auto_Scailing](5_Auto_Scailing.png)
+
+
+
+### 5.1 아키텍처에 구현할 기술
+
+서버의  특정한 설정값에 따라 가상 서버가 자동으로 늘어나거나 줄어드는 기능을 구성하여 확장성과 탄력성을 구현합니다.
+
+
+
+* 필요 AWS 서비스
+
+  Auto Scaling 
+
+* 서버 기준값 보다 서버가 늘어나면 Scaling Out
+* 서버 기준값 보다 서버가 줄어들면 Scaling in
+
+
+
+
+
+
+
+### 5.2 아키텍처 구현 순서
+
+
+
+1. Launch Configuration 생성하기
+
+   1.1 Launch Configuration Name 입력
+
+   ```
+   Create Load Balancer
+   > application load balancer 선택
+   
+   Name : lab-web-alb-asg 
+   Scheme : internet-facing (인터넷을 통해서 설정,외부통신됨)
+   IP address type : Ipv4
+   
+   Availability Zones
+   VPC 선택
+   public vpc 2개 선택(2a,2c)
+   
+   
+   Tag 
+   Key : Name
+   Value : lab-web-ali-asg
+   
+   ```
+
+   
+
+   1.2 Amazon Machine Image (AMI) 선택
+
+   1.3 Instance Type 선택
+
+   1.4 Advanced details에서 User data에 스크립트 추가입력
+
+   1.5 Storage 입력
+
+   1.6 Security Group 선택
+
+   ```
+   Create a new security group
+   Name: lab-web-alb-asg
+   Type : Custom TCP
+   Protocol : TCP
+   Port Range :80
+   Source 
+   custom : 0.0.0.0/0
+   
+   ```
+
+   
+
+   1.7 Key Pair 선택
+
+
+
+
+
+
+
+2. Auto Scaling Group 생성하기
+
+   2.1 Auto Scaling group name 입력
+
+   2.2 Launch configuration 선택
+
+   ```
+   Name : lab-web-lc
+   AMI : custom AMI
+   Instance Type : t2 micro 
+   Advanced details
+   	User Data : 다른 컴포넌트와 연동하는 스크립트 입력 가능
+   
+   
+   ```
+
+   
+
+   2.3 Network 구성에서 VPC , Subnet 선택
+
+   ```
+   VPC : lab-vpc
+   
+   
+   Subnet : pri1-2a , pri2-2c 2개 선택
+   (
+   오토스케일링에서는 private ec2를 셋팅해서 alb통해서 트래픽 나가도록 할 예정
+   )
+   ```
+
+   
+
+   2.4 Load Balancer 선택
+
+   ```
+   Load balancing 
+   Application Load Balancer or Network Load Balancer 선택
+   
+   ```
+
+   
+
+   2.5 Configure group size and scaling policies에서 Desire/Min/Max 값, CPU 값 30을 선택
+
+   ```
+   Desired capacity : 2 
+   Minimum capacity : 2 (최소 2개)
+   Maximum capacity : 4 (최대 4개)
+   
+   Scaling policies - optional 
+   특정 지표로 Auto Scaling이 되게끔 정책을 선택하는 메뉴
+   
+   Policies  : Target tracking scaling policy  선택
+   Name : Target Tracking Policy 
+   Metric type : Average CPU utilization (측정 지표중  cpu 가용량에 따라 Auto Scaling하겠다는 뜻)
+   Target value : 50 ( cpu 사용률이 50프로가 넘으면 ec2가 늘어난다는 뜻 ,수치가 중요)
+   ```
+
+   
+
+   2.6 Add notifications
+
+   ```
+   Auto Scaling 이벤트가 발생했을 떄 알람을 받는 기능
+   ```
+
+   
+
+   2.7 Add tags
+
+   ```
+   중요함
+   ec2가 여러개 있고 , 이것이 새로  생성될 때 Auto Scaling으로 생긴것인지, 기존 Ec2 것인지 구별하기 위함
+   
+   Tag 
+   Key : Name 
+   value : asg 
+   ```
+
+   
+
+​		2.8 test 
+
+```
+public 도메인을 이용해서 웹에 접속한 뒤, LOAD TEST를 통해 CPU 사용률을 100으로 하면서 Auto Scaling을 테스트 해볼 수 있음
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
