@@ -396,15 +396,118 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
    1.1 VPC : CIDR 10.0.0.0/16
 
+   ```
+   Your Vpcs 선택 
+   Create VPC
+   Name tag : lab-vpc (이름 임의설정)
+   IPv4 CIDR block : 10.0.0.0/16 (Subnet 이상으로 IP 설정해주는 칸)
+   IPv6 CIDR block No IPv6 CIDR Block (디폴트)
+   Tenacy : Default
+   ```
+
+   ​		
+
+   ​		
+
    1.2 Subnet(Public/Private) 생성하기
 
    1.2.1 Public 10.0.1.0/24 , 10.0.2.0/24
 
+   ```
+   Subnet 선택
+   Create Subnet
+   Name tag : lab-web-pub1-2a
+   VPC : 위에서생성한 VPC
+   Availability Zone : 2a
+   VPC  CIDRs : CIDR(10.0.0.0/16, status:associated)
+   IPv4 CIDR block : 10.0.1.0/24 (이렇게 하면 총 251개의 아이피를 사용할 수 있음)
+   
+   ```
+
+   
+
+   ```
+   Subnet 선택
+   Create Subnet
+   Name tag : lab-web-pub1-2c
+   VPC : 위에서생성한 VPC
+   Availability Zone : 2c
+   VPC  CIDRs : CIDR(10.0.0.0/16, status:associated)
+   IPv4 CIDR block : 10.0.2.0/24 (이렇게 하면 총 251개의 아이피를 사용할 수 있음)
+   
+   ```
+
+   
+
+   
+
+   
+
+   
+
    1.2.2 Private 10.0.3.0/24, 10.0.4.0/24
+
+   
+
+   ```
+   Subnet 선택
+   Create Subnet
+   Name tag : lab-web-pri1-2a
+   VPC : 위에서생성한 VPC
+   Availability Zone : 2a
+   VPC  CIDRs : CIDR(10.0.0.0/16, status:associated)
+   IPv4 CIDR block : 10.0.3.0/24 (이렇게 하면 총 251개의 아이피를 사용할 수 있음)
+   
+   ```
+
+   
+
+   ```
+   Subnet 선택
+   Create Subnet
+   Name tag : lab-web-pri2-2c
+   VPC : 위에서생성한 VPC
+   Availability Zone : 2c
+   VPC  CIDRs : CIDR(10.0.0.0/16, status:associated)
+   IPv4 CIDR block : 10.0.4.0/24 (이렇게 하면 총 251개의 아이피를 사용할 수 있음)
+   
+   ```
+
+   
+
+   
+
+   
 
    1.2.3 Private 10.0.5.0/24, 10.0.6.0/24
 
+   ```
+   Subnet 선택
+   Create Subnet
+   Name tag : lab-web-pri3-2a
+   VPC : 위에서생성한 VPC
+   Availability Zone : 2a
+   VPC  CIDRs : CIDR(10.0.0.0/16, status:associated)
+   IPv4 CIDR block : 10.0.5.0/24 (이렇게 하면 총 251개의 아이피를 사용할 수 있음)
+   
+   ```
 
+   
+
+   ```
+   Subnet 선택
+   Create Subnet
+   Name tag : lab-web-pri4-2c
+   VPC : 위에서생성한 VPC
+   Availability Zone : 2c
+   VPC  CIDRs : CIDR(10.0.0.0/16, status:associated)
+   IPv4 CIDR block : 10.0.6.0/24 (이렇게 하면 총 251개의 아이피를 사용할 수 있음)
+   
+   ```
+
+   
+
+​		
 
 
 
@@ -412,21 +515,79 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 ​		2.1 Internet Gateway 만들기
 
+​			 Name tag: lab-web-igw 
+
+ 			Attach to VPC :  위에서 만든 vpc로 연결
+
+​			
+
 ​		2.2 Routing table-Public 만들기
+
+​			Routes :  lab-web-rt-pub
 
 ​		2.3 Routing-table-Private 만들기
 
+​			Routes : lab-web-rt-pri
+
 ​		2.4 Public subnet에 Routing table-Public 연결
+
+
+
+```
+Edit routes
+Destination : 0.0.0.0/0
+Target : igw (위에서 만든 인터넷 게이트웨이)
+
+
+Edit subnet associations 
+위에서 만든 public용 Subnet 2개 선택
+
+```
+
+
 
 ​		2.5 Private subnet에 Routing table-Private 연결
 
 
 
-3. Nat Gateway 구성하기
+```
+Edit subnet associations
+위에서 만든 private용  Subnet 4개 선택
+```
+
+
+
+3. Nat Gateway 구성하기 (private ec2가 외부와 통신할 수 있게 구성)
 
    3.1 NAT Gateway 만들기
 
+   ```
+   NAT Gateway  선택
+   Create NAT gateway 
+   name : lab-web-nat-2a
+   subnet : lab-web-pub1-2a
+   Elastic IP allocation ID 할당
+   
+   
+   Create NAT gateway 
+   name : lab-web-nat-2c
+   subnet : lab-web-pub1-2c
+   Elastic IP allocation ID 할당
+   
+   ```
+
+   
+
    3.2 Route table에 NAT Gateway 업데이트
+
+   ```
+   lab-web-rt-pri-2a Edit subnet associations  > (2a 영역만 있는 서브넷을 설정) > 10.0.0.3, 10.0.0.5
+   lab-web-rt-pri-2c Edit subnet associations  > (2c 영역만 있는 서브넷을 설정) > 10.0.0.4, 10.0.0.6
+   lab-web-rt-pub > (public용 서브넷 2개 설정) > 10.0.0.1 , 10.0.0.2 
+   
+   ```
+
+   
 
    3.3 NAT Gateway 테스트
 
@@ -436,9 +597,28 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 ​		4.1 Bastion Host 생성하기
 
+​		AMI 생성, name : lab-web-srv-bastion , t2-micro , 보안그룹 :lab-web-bastion-sg
+
 ​		4.2 Key Pair(xxx.pem) 복사하기
 
 ​		4.3 Bastion Host에 접속하고, Private subnet의 EC2에 접속하기
+​		private subnet - ec2가 라우팅 테이블에 외부 인터넷 통신 되게끔 설정필요, 아래설정 안하면 외부통신 안됨
+
+```
+Destination : 0.0.0.0/0
+Target : nat-위에서 설정한 nat-2a
+status : active
+propagated : No
+```
+
+
+
+```
+Destination : 0.0.0.0/0
+Target : nat-위에서 설정한 nat-2c
+status : active
+propagated : No
+```
 
 
 
