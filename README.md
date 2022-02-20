@@ -6,7 +6,10 @@
 
 
 
-
+| 작성날짜 | 2022-02-19 |
+| -------- | ---------- |
+| 작성자   | 서학용     |
+| 버전     | v1.0       |
 
 
 
@@ -324,4 +327,118 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
    2.6 Load Balancer 생성 및 테스트
 
    2.7 Load Balancer 삭제 선택사항
+
+
+
+
+
+
+
+
+
+
+
+****
+
+
+
+
+
+
+
+## 3. VPC와 중계 서버(Bastion) 구성하기
+
+
+
+### 아키텍처에 구현할 기술
+
+가상의 네트워크에서 인터넷과 연결 또는 연결되지 않은 하위 네트워크를 만들고 다른 가상 서버와 연결하기 위한 중계 서버를 구성합니다. 
+
+
+
+* 필요 AWS 서비스
+
+  Amazon EC2
+
+  Amazon Virtual Private Cloud(VPC )
+
+
+
+
+
+* 기타 필요 사항
+
+  CIDR (IP주소 할당 방법, 클래스가 없는 도메인간의 라우팅 기법)
+
+  Subnetting (CIDR로 할당한 IP대역을 서비스하고자 하는네트워크에 맞게 IP주소 할당 )
+
+​		   Public Subnet :  외부인터넷과 연결 가능
+
+​    	   Private Subnet : 외부인터넷과 연결은 안됨
+
+
+
+
+
+
+
+![3_vpc_bastion](3_vpc_bastion.png)
+
+
+
+
+
+## 아키텍쳐 구현 순서
+
+
+
+1. Custom VPC-Subnet 생성하기
+
+   1.1 VPC : CIDR 10.0.0.0/16
+
+   1.2 Subnet(Public/Private) 생성하기
+
+   1.2.1 Public 10.0.1.0/24 , 10.0.2.0/24
+
+   1.2.2 Private 10.0.3.0/24, 10.0.4.0/24
+
+   1.2.3 Private 10.0.5.0/24, 10.0.6.0/24
+
+
+
+
+
+2. Internet Gateway-Routing Table 설정하기
+
+​		2.1 Internet Gateway 만들기
+
+​		2.2 Routing table-Public 만들기
+
+​		2.3 Routing-table-Private 만들기
+
+​		2.4 Public subnet에 Routing table-Public 연결
+
+​		2.5 Private subnet에 Routing table-Private 연결
+
+
+
+3. Nat Gateway 구성하기
+
+   3.1 NAT Gateway 만들기
+
+   3.2 Route table에 NAT Gateway 업데이트
+
+   3.3 NAT Gateway 테스트
+
+
+
+4. Bastion Host 생성하기
+
+​		4.1 Bastion Host 생성하기
+
+​		4.2 Key Pair(xxx.pem) 복사하기
+
+​		4.3 Bastion Host에 접속하고, Private subnet의 EC2에 접속하기
+
+
 
