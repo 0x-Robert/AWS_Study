@@ -50,28 +50,28 @@
 
 ### 1.2 아키텍쳐 구현 순서
 
-1. S3 정적 웹 호스팅 구성하기
-  1.1  S3 Bucket 생성(디폴트 옵션대로 설치,서버없이 웹 호스팅)
+1. S3 정적 웹 호스팅 구성하기</br>
+  1.1  S3 Bucket 생성(디폴트 옵션대로 설치,서버없이 웹 호스팅)</br>
 
-  1.1.1 S3버킷 생성후 Permission에 버킷 Policy를 생성/편집해서 json 형태로 기입
+  1.1.1 S3버킷 생성후 Permission에 버킷 Policy를 생성/편집해서 json 형태로 기입</br>
 
-  1.1.2 Bucket Policy editor에서 Resource 부분에서 경로밑에 /*를 기입해야 S3 버킷의 모든 콘텐츠에 접근가능해짐
+  1.1.2 Bucket Policy editor에서 Resource 부분에서 경로밑에 /*를 기입해야 S3 버킷의 모든 콘텐츠에 접근가능해짐</br>
 
-  1.1.3 속성과 Object URL이 업로드한 콘텐츠에 명시되있음
+  1.1.3 속성과 Object URL이 업로드한 콘텐츠에 명시되있음</br>
 
-  1.2. 정적 웹 사이트 호스팅 활성화
-  1.3. 웹 사이트 엔드포인트 테스트
+  1.2. 정적 웹 사이트 호스팅 활성화</br>
+  1.3. 웹 사이트 엔드포인트 테스트</br>
 
 
 
-2. CloudFront를 이용해 웹 사이트 속도 높이기
-   2.1. CloudFront 배포만들기
+2. CloudFront를 이용해 웹 사이트 속도 높이기</br>
+   2.1. CloudFront 배포만들기</br>
 
-   2.1.1 Select delivery method : WEB , RTMP 2가지 중 WEB 선택
-   2.1.2 Create distribution 선택
-   2.1.2.1 Origin Domain Name 선택(1번에서 생성한 S3버킷 선택)
+   2.1.1 Select delivery method : WEB , RTMP 2가지 중 WEB 선택</br>
+   2.1.2 Create distribution 선택</br>
+   2.1.2.1 Origin Domain Name 선택(1번에서 생성한 S3버킷 선택)</br>
 
-   2.1.2.2 Origin ID : s3 bucket id ,Origin Connection Attempts :3 , Origin Connection Timeout : 10  
+   2.1.2.2 Origin ID : s3 bucket id ,Origin Connection Attempts :3 , Origin Connection Timeout : 10  </br>
 
    2.1.2.3 Default Cache Behavior Settings {
 
@@ -116,9 +116,9 @@
 
    
 
-   2.2. 생성된 CloudFront 도메인 확인
+   2.2. 생성된 CloudFront 도메인 확인</br>
 
-   - 보통생성 시간은 약 5분~10분정도 소요되며,  위의 설명을 따라서, 옵션대로 셋팅하면 전세계 EDGE Location에 생성되는 것이다. 
+   - 보통생성 시간은 약 5분~10분정도 소요되며,  위의 설명을 따라서, 옵션대로 셋팅하면 전세계 EDGE Location에 생성되는 것이다. </br>
 
 
 
@@ -127,11 +127,11 @@
 ****
 
 - **용어 정리**
-  CDN: Contents Delivery Networks의 줄임말로 정적콘텐츠를 캐싱해서 보여주는 서비스
+  CDN: Contents Delivery Networks의 줄임말로 정적콘텐츠를 캐싱해서 보여주는 서비스</br>
 
-​		Object storage : 하나의 파일과 그 파일을 설명하는 메타데이터까지 오브젝트라고 함
-​		(S3는 오브젝트를 버킷이라고 하는 저장공간에 저장함, 디렉토리의 개념임(PC), 버킷의 권한
-​		조정을 통해 오브젝트를 업로드하고, 삭제하는것을 조정함
+​		Object storage : 하나의 파일과 그 파일을 설명하는 메타데이터까지 오브젝트라고 함</br>
+​		(S3는 오브젝트를 버킷이라고 하는 저장공간에 저장함, 디렉토리의 개념임(PC), 버킷의 권한</br>
+​		조정을 통해 오브젝트를 업로드하고, 삭제하는것을 조정함</br>
 
 
 
@@ -145,21 +145,21 @@
 
 
 
-* 사전 지식 및 셋팅
+* 사전 지식 및 셋팅</br>
 
 
-EC2 :  AWS에서 컴퓨터 한대를 임대할 때 쓰는 단위, 임대서버라고 보면된다. (Elastic Compute Cloud)
+EC2 :  AWS에서 컴퓨터 한대를 임대할 때 쓰는 단위, 임대서버라고 보면된다. (Elastic Compute Cloud)</br>
 
-LAMP :Linux + Apache + Mysql,MariaDB + PHP,Perl,Python를 합친 단어, 4개 스택을 많이 써서 그렇다.
+LAMP :Linux + Apache + Mysql,MariaDB + PHP,Perl,Python를 합친 단어, 4개 스택을 많이 써서 그렇다.</br>
 
-ELB : (Elastic Load Balancer) 
-기존에 사용하던 서비스중 L4, Load Balance 서비스라고 생각하면 이해하기 쉽습니다. 웹 서버 및 각종 서버에 사용량과 접속자가 많은 겨우 트래픽에 대한 부하 분산을 통해 네트워크 트래픽을 인스턴스로 전달합니다.
+ELB : (Elastic Load Balancer) </br>
+기존에 사용하던 서비스중 L4, Load Balance 서비스라고 생각하면 이해하기 쉽습니다. 웹 서버 및 각종 서버에 사용량과 접속자가 많은 겨우 트래픽에 대한 부하 분산을 통해 네트워크 트래픽을 인스턴스로 전달합니다.</br>
 
 
 
-· LAMP 웹 서버 설치를 위한 User Data 스크립트는 EC2가 생성되는 과정에서 Apache 웹 서버, MySQL 데이터베이스, PHP 어플리케이션이 설치될 수 있게 해줍니다.
+· LAMP 웹 서버 설치를 위한 User Data 스크립트는 EC2가 생성되는 과정에서 Apache 웹 서버, MySQL 데이터베이스, PHP 어플리케이션이 설치될 수 있게 해줍니다.</br>
 
-· 스크립트의 세부 내용은 아래와 같으며, EC2 생성 단계 중 User Data에 아래 내용을 복사하여 붙여넣으셔도 동일한 LAMP 웹 서버가 설치됩니다.
+· 스크립트의 세부 내용은 아래와 같으며, EC2 생성 단계 중 User Data에 아래 내용을 복사하여 붙여넣으셔도 동일한 LAMP 웹 서버가 설치됩니다.</br>
 
 
 
@@ -200,25 +200,25 @@ fi
 
 
 
-### 2.1 아키텍처에 구현할 기술
+### 2.1 아키텍처에 구현할 기술</br>
 
-Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP 어플리케이션을 구축하고 로드 밸런서를 이용하여 이중화 구성을 만듭니다.
+Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP 어플리케이션을 구축하고 로드 밸런서를 이용하여 이중화 구성을 만듭니다.</br>
 
 
 
-* **필요 AWS 서비스** 
+* **필요 AWS 서비스** </br>
 
-​    	 Amazon Elastic Comput Cloud(EC2)
+​    	 Amazon Elastic Comput Cloud(EC2)</br>
 
   	   Amazon Virtual Private Cloud(VPC)
 
-​		 Elastic Load Balancing / Application Load Balancer
+​		 Elastic Load Balancing / Application Load Balancer</br>
 
-* **기타 필요 사항**
+* **기타 필요 사항</br>**
 
-  Linux O/S
+  Linux O/S</br>
 
-  간단한 MYSQL 및 Query 이해
+  간단한 MYSQL 및 Query 이해</br>
 
 
 
@@ -228,14 +228,14 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 
 
-1. Amazon Linux 2에 LAMP 웹 서버 설치하기
+1. Amazon Linux 2에 LAMP 웹 서버 설치하기</br>
 
-   1.1 EC2 생성 시 User Data 스크립트 추가하여 자동으로 설치
+   1.1 EC2 생성 시 User Data 스크립트 추가하여 자동으로 설치</br>
 
-   1.2 LAMP 서버 테스트
+   1.2 LAMP 서버 테스트</br>
 
-2. Custom AMI 생성
-   2.1 Create Image 
+2. Custom AMI 생성</br>
+   2.1 Create Image </br>
 
    ```
    Image name : 이미지 네임 설정
@@ -245,17 +245,17 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
    
 
-3. Custom AMI로 두 번째 LAMP 서버 생성
+3. Custom AMI로 두 번째 LAMP 서버 생성</br>
 
-4. ssh 접속 후 데이터 베이스 보안 설정
+4. ssh 접속 후 데이터 베이스 보안 설정</br>
 
 
 
-2. Application Load Balancer 시작하기
+2. Application Load Balancer 시작하기</br>
 
-   2.1 Load Balancer 유형 선택
-   	   Load Balancing / Load Balancers / Create Load Balancer
-          Application Load Balancer / Network Load Balancer / Classic Load Balancer
+   2.1 Load Balancer 유형 선택</br>
+   	   Load Balancing / Load Balancers / Create Load Balancer</br>
+          Application Load Balancer / Network Load Balancer / Classic Load Balancer</br>
 
     	  Step1 Configure Load Balancer
 
@@ -279,7 +279,7 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
    value : lab-web-alb
    ```
 
-     	 Step 2, 3 보안그룹설정 필수
+   ​		Step 2, 3 보안그룹설정 필수
 
    ​		Step 4 라우팅 컨피그 
 
@@ -305,9 +305,9 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
    
    ```
 
-   ​      Step 5 Register Target 
+   ​      Step 5 Register Target </br>
 
-   ​	  Step 6 Review 
+   ​	  Step 6 Review </br>
 
    ```
    alb의 DNS name이 중요하다. 
@@ -316,17 +316,17 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
    
 
-   2.2 Load Balancer 및 리스너 구성
+   2.2 Load Balancer 및 리스너 구성</br>
 
-   2.3 Load Balancer에 대한 보안 그룹 구성
+   2.3 Load Balancer에 대한 보안 그룹 구성</br>
 
-   2.4 대상 그룹 구성
+   2.4 대상 그룹 구성</br>
 
-   2.5 대상 그룹에 대상 등록
+   2.5 대상 그룹에 대상 등록</br>
 
-   2.6 Load Balancer 생성 및 테스트
+   2.6 Load Balancer 생성 및 테스트</br>
 
-   2.7 Load Balancer 삭제 선택사항
+   2.7 Load Balancer 삭제 선택사항</br>
 
 
 
@@ -350,31 +350,31 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 
 
-### 3.1 아키텍처에 구현할 기술
+### 3.1 아키텍처에 구현할 기술</br>
 
-가상의 네트워크에서 인터넷과 연결 또는 연결되지 않은 하위 네트워크를 만들고 다른 가상 서버와 연결하기 위한 중계 서버를 구성합니다. 
-
-
-
-* 필요 AWS 서비스
-
-  Amazon EC2
-
-  Amazon Virtual Private Cloud(VPC )
+가상의 네트워크에서 인터넷과 연결 또는 연결되지 않은 하위 네트워크를 만들고 다른 가상 서버와 연결하기 위한 중계 서버를 구성합니다. </br>
 
 
 
+* 필요 AWS 서비스</br>
+
+  Amazon EC2</br>
+
+  Amazon Virtual Private Cloud(VPC )</br>
 
 
-* 기타 필요 사항
 
-  CIDR (IP주소 할당 방법, 클래스가 없는 도메인간의 라우팅 기법)
 
-  Subnetting (CIDR로 할당한 IP대역을 서비스하고자 하는네트워크에 맞게 IP주소 할당 )
 
-​		   Public Subnet :  외부인터넷과 연결 가능
+* 기타 필요 사항</br>
 
-​    	   Private Subnet : 외부인터넷과 연결은 안됨
+  CIDR (IP주소 할당 방법, 클래스가 없는 도메인간의 라우팅 기법)</br>
+
+  Subnetting (CIDR로 할당한 IP대역을 서비스하고자 하는네트워크에 맞게 IP주소 할당 )</br>
+
+​		   Public Subnet :  외부인터넷과 연결 가능</br>
+
+​    	   Private Subnet : 외부인터넷과 연결은 안됨</br>
 
 
 
@@ -388,13 +388,13 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 
 
-### 3.2 아키텍쳐 구현 순서
+### 3.2 아키텍쳐 구현 순서</br>
 
 
 
-1. Custom VPC-Subnet 생성하기
+1. Custom VPC-Subnet 생성하기</br>
 
-   1.1 VPC : CIDR 10.0.0.0/16
+   1.1 VPC : CIDR 10.0.0.0/16</br>
 
    ```
    Your Vpcs 선택 
@@ -409,9 +409,9 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
    ​		
 
-   1.2 Subnet(Public/Private) 생성하기
+   1.2 Subnet(Public/Private) 생성하기</br>
 
-   1.2.1 Public 10.0.1.0/24 , 10.0.2.0/24
+   1.2.1 Public 10.0.1.0/24 , 10.0.2.0/24</br>
 
    ```
    Subnet 선택
@@ -445,7 +445,7 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
    
 
-   1.2.2 Private 10.0.3.0/24, 10.0.4.0/24
+   1.2.2 Private 10.0.3.0/24, 10.0.4.0/24</br>
 
    
 
@@ -479,7 +479,7 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
    
 
-   1.2.3 Private 10.0.5.0/24, 10.0.6.0/24
+   1.2.3 Private 10.0.5.0/24, 10.0.6.0/24</br>
 
    ```
    Subnet 선택
@@ -511,25 +511,25 @@ Linux 기반의 가상 서버에 Apache 웹서버, MySQL 데이터베이스, PHP
 
 
 
-2. Internet Gateway-Routing Table 설정하기
+2. Internet Gateway-Routing Table 설정하기</br>
 
-​		2.1 Internet Gateway 만들기
+​		2.1 Internet Gateway 만들기</br>
 
-​			 Name tag: lab-web-igw 
+​			 Name tag: lab-web-igw </br>
 
  			Attach to VPC :  위에서 만든 vpc로 연결
 
 ​			
 
-​		2.2 Routing table-Public 만들기
+​		2.2 Routing table-Public 만들기</br>
 
-​			Routes :  lab-web-rt-pub
+​			Routes :  lab-web-rt-pub</br>
 
-​		2.3 Routing-table-Private 만들기
+​		2.3 Routing-table-Private 만들기</br>
 
-​			Routes : lab-web-rt-pri
+​			Routes : lab-web-rt-pri</br>
 
-​		2.4 Public subnet에 Routing table-Public 연결
+​		2.4 Public subnet에 Routing table-Public 연결</br>
 
 
 
@@ -546,7 +546,7 @@ Edit subnet associations
 
 
 
-​		2.5 Private subnet에 Routing table-Private 연결
+​		2.5 Private subnet에 Routing table-Private 연결</br>
 
 
 
@@ -557,9 +557,9 @@ Edit subnet associations
 
 
 
-3. Nat Gateway 구성하기 (private ec2가 외부와 통신할 수 있게 구성)
+3. Nat Gateway 구성하기 (private ec2가 외부와 통신할 수 있게 구성)</br>
 
-   3.1 NAT Gateway 만들기
+   3.1 NAT Gateway 만들기</br>
 
    ```
    NAT Gateway  선택
@@ -578,7 +578,7 @@ Edit subnet associations
 
    
 
-   3.2 Route table에 NAT Gateway 업데이트
+   3.2 Route table에 NAT Gateway 업데이트</br>
 
    ```
    lab-web-rt-pri-2a Edit subnet associations  > (2a 영역만 있는 서브넷을 설정) > 10.0.0.3, 10.0.0.5
@@ -593,16 +593,16 @@ Edit subnet associations
 
 
 
-4. Bastion Host 생성하기
+4. Bastion Host 생성하기</br>
 
-​		4.1 Bastion Host 생성하기
+​		4.1 Bastion Host 생성하기</br>
 
-​		AMI 생성, name : lab-web-srv-bastion , t2-micro , 보안그룹 :lab-web-bastion-sg
+​		AMI 생성, name : lab-web-srv-bastion , t2-micro , 보안그룹 :lab-web-bastion-sg</br>
 
-​		4.2 Key Pair(xxx.pem) 복사하기
+​		4.2 Key Pair(xxx.pem) 복사하기</br>
 
-​		4.3 Bastion Host에 접속하고, Private subnet의 EC2에 접속하기
-​		private subnet - ec2가 라우팅 테이블에 외부 인터넷 통신 되게끔 설정필요, 아래설정 안하면 외부통신 안됨
+​		4.3 Bastion Host에 접속하고, Private subnet의 EC2에 접속하기</br>
+​		private subnet - ec2가 라우팅 테이블에 외부 인터넷 통신 되게끔 설정필요, 아래설정 안하면 외부통신 안됨</br>
 
 ```
 Destination : 0.0.0.0/0
@@ -630,11 +630,11 @@ propagated : No
 
 
 
-## 4. RDS for MYSQL 생성하기
+## 4. RDS for MYSQL 생성하기</br>
 
 
 
-사전 셋팅 
+사전 셋팅 </br>
 
 ```
 ■ 실습 진행 중 참고 사항
@@ -676,19 +676,19 @@ propagated : No
 
 
 
-### 4.1 아키텍쳐에 구현할 기술
+### 4.1 아키텍쳐에 구현할 기술</br>
 
-완전 관리형 MySQL 데이터 베이스를 구성하고 리눅스 기반의 가상서버에 MYSQL 클라이언트로 연결합니다.
+완전 관리형 MySQL 데이터 베이스를 구성하고 리눅스 기반의 가상서버에 MYSQL 클라이언트로 연결합니다.</br>
 
 
 
-* 필요 AWS 서비스
+* 필요 AWS 서비스</br>
 
-  Amazon Relational Database Service(RDS)
+  Amazon Relational Database Service(RDS)</br>
 
-* 기타 필요 사항
+* 기타 필요 사항</br>
 
-  간단한 Query문 및 PHP 문법
+  간단한 Query문 및 PHP 문법</br>
 
 
 
@@ -698,17 +698,17 @@ propagated : No
 
 ### 4.2 아키텍처 구현 순서
 
-1.RDS for MySQL 구성하기
+1.RDS for MySQL 구성하기</br>
 
-1.1 Database creation method 선택
+1.1 Database creation method 선택</br>
 
-1.2 Database Engine 선택
+1.2 Database Engine 선택</br>
 
-1.3 DB 식별, Master Username/PW 셋팅
+1.3 DB 식별, Master Username/PW 셋팅</br>
 
-1.4 DB Instance size 선택
+1.4 DB Instance size 선택</br>
 
-1.5 네트워크 설정
+1.5 네트워크 설정</br>
 
 ```
 Connectivity 
@@ -747,18 +747,18 @@ Subnet group : default-vpc 선택
 
 
 
-### 5.1 아키텍처에 구현할 기술
+### 5.1 아키텍처에 구현할 기술</br>
 
-서버의  특정한 설정값에 따라 가상 서버가 자동으로 늘어나거나 줄어드는 기능을 구성하여 확장성과 탄력성을 구현합니다.
+서버의  특정한 설정값에 따라 가상 서버가 자동으로 늘어나거나 줄어드는 기능을 구성하여 확장성과 탄력성을 구현합니다.</br>
 
 
 
-* 필요 AWS 서비스
+* 필요 AWS 서비스</br>
 
-  Auto Scaling 
+  Auto Scaling </br>
 
-* 서버 기준값 보다 서버가 늘어나면 Scaling Out
-* 서버 기준값 보다 서버가 줄어들면 Scaling in
+* 서버 기준값 보다 서버가 늘어나면 Scaling Out</br>
+* 서버 기준값 보다 서버가 줄어들면 Scaling in</br>
 
 
 
@@ -770,9 +770,9 @@ Subnet group : default-vpc 선택
 
 
 
-1. Launch Configuration 생성하기
+1. Launch Configuration 생성하기</br>
 
-   1.1 Launch Configuration Name 입력
+   1.1 Launch Configuration Name 입력</br>
 
    ```
    Create Load Balancer
@@ -795,15 +795,15 @@ Subnet group : default-vpc 선택
 
    
 
-   1.2 Amazon Machine Image (AMI) 선택
+   1.2 Amazon Machine Image (AMI) 선택</br>
 
-   1.3 Instance Type 선택
+   1.3 Instance Type 선택</br>
 
-   1.4 Advanced details에서 User data에 스크립트 추가입력
+   1.4 Advanced details에서 User data에 스크립트 추가입력</br>
 
-   1.5 Storage 입력
+   1.5 Storage 입력</br>
 
-   1.6 Security Group 선택
+   1.6 Security Group 선택</br>
 
    ```
    Create a new security group
@@ -818,7 +818,7 @@ Subnet group : default-vpc 선택
 
    
 
-   1.7 Key Pair 선택
+   1.7 Key Pair 선택</br>
 
 
 
@@ -826,11 +826,11 @@ Subnet group : default-vpc 선택
 
 
 
-2. Auto Scaling Group 생성하기
+2. Auto Scaling Group 생성하기</br>
 
-   2.1 Auto Scaling group name 입력
+   2.1 Auto Scaling group name 입력</br>
 
-   2.2 Launch configuration 선택
+   2.2 Launch configuration 선택</br>
 
    ```
    Name : lab-web-lc
@@ -844,7 +844,7 @@ Subnet group : default-vpc 선택
 
    
 
-   2.3 Network 구성에서 VPC , Subnet 선택
+   2.3 Network 구성에서 VPC , Subnet 선택</br>
 
    ```
    VPC : lab-vpc
@@ -858,7 +858,7 @@ Subnet group : default-vpc 선택
 
    
 
-   2.4 Load Balancer 선택
+   2.4 Load Balancer 선택</br>
 
    ```
    Load balancing 
@@ -868,7 +868,7 @@ Subnet group : default-vpc 선택
 
    
 
-   2.5 Configure group size and scaling policies에서 Desire/Min/Max 값, CPU 값 30을 선택
+   2.5 Configure group size and scaling policies에서 Desire/Min/Max 값, CPU 값 30을 선택</br>
 
    ```
    Desired capacity : 2 
@@ -886,7 +886,7 @@ Subnet group : default-vpc 선택
 
    
 
-   2.6 Add notifications
+   2.6 Add notifications</br>
 
    ```
    Auto Scaling 이벤트가 발생했을 떄 알람을 받는 기능
@@ -894,7 +894,7 @@ Subnet group : default-vpc 선택
 
    
 
-   2.7 Add tags
+   2.7 Add tags</br>
 
    ```
    중요함
@@ -907,11 +907,13 @@ Subnet group : default-vpc 선택
 
    
 
-​		2.8 test 
+​		2.8 test </br>
 
 ```
 public 도메인을 이용해서 웹에 접속한 뒤, LOAD TEST를 통해 CPU 사용률을 100으로 하면서 Auto Scaling을 테스트 해볼 수 있음
 
+Scaling out : load.php 파일경로로 옮겨지면서 CPU 사용률 100%로 됨
+Scaling in  : url/load.php에서  load.php를 지우고 상위 url로 옮기면됨
 ```
 
 
